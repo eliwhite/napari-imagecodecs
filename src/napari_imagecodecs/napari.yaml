@@ -1,0 +1,28 @@
+name: napari-imagecodecs
+display_name: Imagecodecs
+# use 'hidden' to remove plugin from napari hub search results
+visibility: public
+# see https://napari.org/stable/plugins/technical_references/manifest.html#fields for valid categories
+# categories: []
+contributions:
+  commands:
+    - id: napari-imagecodecs.get_reader
+      python_name: napari_imagecodecs._reader:napari_get_reader
+      title: Open data with Imagecodecs
+    - id: napari-imagecodecs.write_multiple
+      python_name: napari_imagecodecs._writer:write_multiple
+      title: Save multi-layer data with Imagecodecs
+    - id: napari-imagecodecs.write_single_image
+      python_name: napari_imagecodecs._writer:write_single_image
+      title: Save image data with Imagecodecs
+  readers:
+    - command: napari-imagecodecs.get_reader
+      accepts_directories: false
+      filename_patterns: ['*.npy']
+  writers:
+    - command: napari-imagecodecs.write_multiple
+      layer_types: ['image*','labels*']
+      filename_extensions: []
+    - command: napari-imagecodecs.write_single_image
+      layer_types: ['image']
+      filename_extensions: ['.npy']
