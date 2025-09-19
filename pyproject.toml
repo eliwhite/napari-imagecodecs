@@ -1,7 +1,7 @@
 [project]
 name = "napari-imagecodecs"
 dynamic = ["version"]
-description = "A basic plugin that allows loading jls and jxl files into napari via imagecodecs."
+description = "JPEG-LS & JPEG XL Reader for napari - Load compressed scientific images directly into napari using the high-performance imagecodecs library."
 readme = "README.md"
 license = {file = "LICENSE"}
 authors = [
@@ -9,8 +9,9 @@ authors = [
   {email = "eli.white@emitimaging.com"},
 ]
 classifiers = [
-    "Development Status :: 2 - Pre-Alpha",
+    "Development Status :: 4 - Beta",
     "Framework :: napari",
+    "Intended Audience :: Science/Research",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
@@ -22,8 +23,23 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Topic :: Scientific/Engineering :: Image Processing",
+    "Topic :: Scientific/Engineering :: Medical Science Apps.",
 ]
 requires-python = ">=3.10"
+keywords = [
+    "napari",
+    "imagecodecs",
+    "jpeg-ls",
+    "jpeg-xl",
+    "jls",
+    "jxl",
+    "compressed-images",
+    "scientific-imaging",
+    "microscopy",
+    "tomography",
+    "image-processing",
+    "bioimaging"
+]
 # napari can be included in dependencies if napari imports are required.
 # However, you should not include napari[all], napari[qt],
 # or any other Qt bindings directly (e.g. PyQt5, PySide2).

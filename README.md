@@ -9,19 +9,18 @@
 [![npe2](https://img.shields.io/badge/plugin-npe2-blue?link=https://napari.org/stable/plugins/index.html)](https://napari.org/stable/plugins/index.html)
 [![Copier](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/copier-org/copier/master/img/badge/badge-grayscale-inverted-border-purple.json)](https://github.com/copier-org/copier)
 
-A basic plugin that allows loading jls and jxl files into napari via imagecodecs.
+JPEG-LS & JPEG XL Reader for napari
 
-----------------------------------
+This plugin adds support for loading JPEG-LS (.jls) and JPEG XL (.jxl) images directly into napari, using the high-performance imagecodecs library. It's designed for researchers and imaging scientists who work with microscopy, tomography, or other large-scale imaging datasets stored in modern compressed formats.
 
-This [napari] plugin was generated with [copier] using the [napari-plugin-template] (None).
+## Features
 
-<!--
-Don't miss the full getting started guide to set up your new package:
-https://github.com/napari/napari-plugin-template#getting-started
-
-and review the napari docs for plugin developers:
-https://napari.org/stable/plugins/index.html
--->
+- **File Support**: Read .jls (JPEG-LS) and .jxl (JPEG XL) images
+- **Folder Support**: Load entire directories of compressed images as stacked volumes
+- **Lazy Loading**: Efficient loading of large datasets using dask
+- **Integration**: Automatically registers as a napari reader plugin
+- **Performance**: Uses imagecodecs backend for fast decoding
+- **Data Types**: Supports grayscale and RGB images, including high-bit-depth scientific data
 
 ## Installation
 
@@ -44,7 +43,27 @@ To install latest development version :
 pip install git+https://github.com/eliwhite/napari-imagecodecs.git
 ```
 
+## Usage
 
+### Opening Files
+Simply drag and drop your .jls or .jxl files into napari, or use File → Open.
+
+### Opening Folders
+To load entire directories of compressed images:
+1. Use File → Open Folder
+2. Select a directory containing .jls or .jxl files
+3. All images will be loaded as a stacked volume
+
+### Supported Formats
+- **JPEG-LS (.jls)**: Lossless compression, ideal for scientific imaging
+- **JPEG XL (.jxl)**: Advanced compression for high-bit-depth images
+- **Mixed folders**: Can handle directories with both formats
+
+## Example Use Cases
+
+- Load JPEG-LS compressed microscopy data directly in napari for annotation
+- Preview JPEG XL volumes from tissue imaging without converting to TIFF
+- Integrate compressed datasets into napari workflows for visualization, segmentation, or registration
 
 ## Contributing
 
