@@ -1,0 +1,19 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: v1.1.0
+_src_path: https://github.com/napari/napari-plugin-template
+display_name: Imagecodecs
+email: eli.white@emitimaging.com
+full_name: Eli White
+github_repository_url: https://github.com/eliwhite/napari-imagecodecs
+github_username_or_organization: eliwhite
+include_reader_plugin: true
+include_sample_data_plugin: false
+include_widget_plugin: false
+include_writer_plugin: true
+install_dependabot: true
+install_precommit: true
+license: MIT
+module_name: napari_imagecodecs
+plugin_name: napari-imagecodecs
+short_description: A basic plugin that allows loading jls and jxl files into napari
+    via imagecodecs.
