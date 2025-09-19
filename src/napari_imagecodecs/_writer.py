@@ -1,16 +1,17 @@
 """
-This module is an example of a barebones writer plugin for napari.
+This module provides imagecodecs-based writers for napari.
 
-It implements the Writer specification.
+It implements the Writer specification for various image formats supported by imagecodecs.
 see: https://napari.org/stable/plugins/building_a_plugin/guides.html#writers
-
-Replace code below according to your needs.
 """
 
 from __future__ import annotations
 
 from collections.abc import Sequence
 from typing import TYPE_CHECKING, Any, Union
+
+import imagecodecs
+import numpy as np
 
 if TYPE_CHECKING:
     DataType = Union[Any, Sequence[Any]]
@@ -34,8 +35,30 @@ def write_single_image(path: str, data: Any, meta: dict) -> list[str]:
     -------
     [path] : A list containing the string path to the saved file.
     """
+    # Convert data to numpy array if it isn't already
+    if not isinstance(data, np.ndarray):
+        data = np.asarray(data)
 
-    # implement your writer logic here ...
+    # Determine file format and write accordingly
+    if path.lower().endswith(".npy"):
+        np.save(path, data)
+    elif path.lower().endswith(".jls"):
+        # Convert to uint8 if needed for JPEG-LS
+        if data.dtype != np.uint8:
+            data = data.astype(np.uint8)
+        encoded_data = imagecodecs.jpegls_encode(data)
+        with open(path, "wb") as f:
+            f.write(encoded_data)
+    elif path.lower().endswith(".jxl"):
+        # Convert to uint8 if needed for JPEG XL
+        if data.dtype != np.uint8:
+            data = data.astype(np.uint8)
+        encoded_data = imagecodecs.jpegxl_encode(data)
+        with open(path, "wb") as f:
+            f.write(encoded_data)
+    else:
+        # Default to numpy format for unsupported extensions
+        np.save(path, data)
 
     # return path to any file(s) that were successfully written
     return [path]
@@ -59,8 +82,47 @@ def write_multiple(path: str, data: list[FullLayerData]) -> list[str]:
     -------
     [path] : A list containing (potentially multiple) string paths to the saved file(s).
     """
+    saved_paths = []
 
-    # implement your writer logic here ...
+    # For multiple layers, we'll save each as a separate file
+    # with a suffix indicating the layer index
+    base_path = path
+    if "." in base_path:
+        base_name, ext = base_path.rsplit(".", 1)
+    else:
+        base_name = base_path
+        ext = "npy"  # default extension
+
+    for i, (layer_data, _meta, _layer_type) in enumerate(data):
+        layer_path = path if len(data) == 1 else f"{base_name}_layer_{i}.{ext}"
+
+        # Convert data to numpy array if it isn't already
+        if not isinstance(layer_data, np.ndarray):
+            layer_data = np.asarray(layer_data)
+
+        # Write the layer data
+        if layer_path.lower().endswith(".npy"):
+            np.save(layer_path, layer_data)
+        elif layer_path.lower().endswith(".jls"):
+            # Convert to uint8 if needed for JPEG-LS
+            if layer_data.dtype != np.uint8:
+                layer_data = layer_data.astype(np.uint8)
+            encoded_data = imagecodecs.jpegls_encode(layer_data)
+            with open(layer_path, "wb") as f:
+                f.write(encoded_data)
+        elif layer_path.lower().endswith(".jxl"):
+            # Convert to uint8 if needed for JPEG XL
+            if layer_data.dtype != np.uint8:
+                layer_data = layer_data.astype(np.uint8)
+            encoded_data = imagecodecs.jpegxl_encode(layer_data)
+            with open(layer_path, "wb") as f:
+                f.write(encoded_data)
+        else:
+            # Default to numpy format for unsupported extensions
+            layer_path = f"{base_name}_layer_{i}.npy"
+            np.save(layer_path, layer_data)
+
+        saved_paths.append(layer_path)
 
     # return path to any file(s) that were successfully written
-    return [path]
+    return saved_paths

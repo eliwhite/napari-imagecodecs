@@ -17,12 +17,12 @@ contributions:
       title: Save image data with Imagecodecs
   readers:
     - command: napari-imagecodecs.get_reader
-      accepts_directories: false
-      filename_patterns: ['*.npy']
+      accepts_directories: true
+      filename_patterns: ['*.npy', '*.jls', '*.jxl']
   writers:
     - command: napari-imagecodecs.write_multiple
       layer_types: ['image*','labels*']
-      filename_extensions: []
+      filename_extensions: ['.npy', '.jls', '.jxl']
     - command: napari-imagecodecs.write_single_image
       layer_types: ['image']
-      filename_extensions: ['.npy']
+      filename_extensions: ['.npy', '.jls', '.jxl']
