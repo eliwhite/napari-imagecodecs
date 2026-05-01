@@ -72,7 +72,7 @@ napari-imagecodecs = "napari_imagecodecs:napari.yaml"
 "User Support" = "https://github.com/eliwhite/napari-imagecodecs/issues"
 
 [build-system]
-requires = ["setuptools>=42.0.0", "setuptools_scm"]
+requires = ["setuptools>=82.0.1", "setuptools_scm"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
